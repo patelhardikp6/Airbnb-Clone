@@ -47,7 +47,6 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
 
 
-
 const sessionOptions = {
     store,
     secret: process,
