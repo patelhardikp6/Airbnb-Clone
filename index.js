@@ -28,11 +28,15 @@ main()
     .then(() => {
         console.log("connected to db");
     }).catch((err) => {
-        console.log(err);
+        console.log("Database connection error: ", err);
     });
 
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(dbUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        ssl: true,  // Ensure SSL is enabled
+    });
 }
 
 app.set("view engine", "ejs");
