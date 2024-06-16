@@ -49,7 +49,6 @@ app.engine('ejs', ejsMate);
 
 
 const sessionOptions = {
-    store,
     secret: process,
     resave: false,
     saveUninitialized: true,
