@@ -9,7 +9,7 @@ const userController = require("../controllers/user.js");
 
 
 router.
-    route("/signUp")
+    route("/signup")
     .get(userController.renderSignUpForm)
     .post(wrapAsync(userController.signup));
 
@@ -17,14 +17,14 @@ router.
 //router.post("/signUp",wrapAsync(userController.signup));
 
 router.route("/login")
-.get(userController.renderLoginForm)
-.post(
-    saveRedirectUrl,
-    passport.authenticate("local",{
-        failureRedirect : "/login",
-        failureFlash:true,
-    }),
-    userController.logIn
+    .get(userController.renderLoginForm)
+    .post(
+        saveRedirectUrl,
+        passport.authenticate("local", {
+            failureRedirect: "/login",
+            failureFlash: true,
+        }),
+        userController.logIn
     );
 // router.get("/login",userController.renderLoginForm);
 
@@ -38,5 +38,5 @@ router.route("/login")
 //     userController.logIn
 //     );
 
-router.get("/logout",userController.logout);
+router.get("/logout", userController.logout);
 module.exports = router;
