@@ -32,12 +32,36 @@ main()
     });
 
 async function main() {
-    await mongoose.connect(dbUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        ssl: true,  // Ensure SSL is enabled
-    });
+    await mongoose.connect(dbUrl
+    );
 }
+
+//mongostore
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: "mysupersecretecode"
+    },
+    touchAfter: 24 * 3600,
+});
+
+store.on("error", ()=>{
+    console.log("ERROR in MONGO SESSION STORE: ", err);
+})
+
+//function with session option
+const sessionOptions = {
+    store,
+    secret: "mysupersecretecode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+}
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -45,19 +69,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate);
-
-
-const sessionOptions = {
-    store,
-    secret: process,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-    },
-    httpOnly: true,
-};
 
 app.use(session(sessionOptions));
 app.use(flash());
