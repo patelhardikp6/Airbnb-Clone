@@ -31,11 +31,12 @@ module.exports.showListing = async(req,res) => {
 
 module.exports.createListing = async (req,res ,next) => {
     console.log(req.body.listing.location);
-    let response = await geocodingClient.forwardGeocode({
-        query: req.body.listing.location,
-        limit: 1,
-      }).then((res) => console.log(res)).catch((err) => console.log(err));
-        // console.log(response);
+    // let response = await geocodingClient.forwardGeocode({
+    //     query: req.body.listing.location,
+    //     limit: 1,
+    //   })
+    // console.log(response);
+
     let url = req.file.path;
     let filename = req.file.filename;
     console.log(url , ".." , filename);
@@ -44,7 +45,10 @@ module.exports.createListing = async (req,res ,next) => {
     newListing.owner = req.user._id;
     newListing.image= { url, filename};
 
-    newListing.geometry = response.body.features[0].geometry;
+    newListing.geometry = {
+        type:"Point",
+        coordinates:[77.209,28.6139],
+    }
 
     let savedListing = await newListing.save().then(res => console.log(res)).catch(err => console.log(err));
     console.log(savedListing);
