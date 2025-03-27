@@ -93,5 +93,10 @@
         <h3>Where you'll be ?</h3>
         <div id="map"></div>
     </div>
+    <%if (currUser && listing.owner) {%>
+        <form class="col-5 offset-3 mb-3" method="GET" action="/listings/<%= listing._id %>/book">
+            <button class="book">Book Now</button>
+        </form>
+    <% } %>
     <script src="/js/map.js"></script>
 </body>
