@@ -36,11 +36,11 @@ const listingSchema = new Schema({
             required:true,
         },
     },
-    // category:{
+});
+// category:{
     //     type:String,
     //     enum : ["Mountains","Trending","Iconic Cities","Castles","Pools","Camping","Farms","Snow"],
     // },
-});
 
 listingSchema.post("findOneAndDelete", async (listing) => {
     if(listing){
